@@ -78,6 +78,22 @@ main{width:90%;max-width:1000px;margin:2rem auto;}
   position:absolute;top:.4rem;right:.6rem;background:none;border:none;
   font-size:1.5rem;cursor:pointer;
 }
+/* Botón modal – aprobar curso */
+.btn-aprobar{
+  display:block;                 /* ocupa todo el ancho del <li> */
+  margin:1rem auto;              /* lo centra horizontalmente */
+  padding:.6rem 1.4rem;
+  font-size:1rem;
+  font-weight:600;
+  color:#333;
+  background:#FDB7EA;            /* rosita pastel */
+  border:none;
+  border-radius:.6rem;
+  box-shadow:0 2px 4px #0002;
+  cursor:pointer;
+  transition:transform .15s;
+}
+.btn-aprobar:hover{transform:scale(1.05);}
 
 /* util */
 .oculto{display:none;}
