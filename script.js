@@ -97,13 +97,24 @@ function prereqsAprobados(c){
  * ---------------------------------------------------------*/
 window.updateCurso = function(cod, nota=null, estado=null){
   const c = cursos.find(x=>x.cod===cod);
-  if(!c){alert("Código no encontrado"); return;}
+  if(!c){
+    Swal.fire({icon:"error",title:"Oops…",text:"Código no encontrado"});
+    return;
+  }
 
-  if(nota!==null)   c.nota   = nota;
-  if(estado)        c.estado = estado;
+  if(nota!==null) c.nota   = nota;
+  if(estado)      c.estado = estado;
 
-  render();                       // redibuja todo
-  alert(`${cod} actualizado ✅`);
+  render();   // redibuja
+
+  /* 🎉 Pop‑up bonito */
+  Swal.fire({
+    title: "¡Felicitaciones! 🎓",
+    html: `<b>${c.nombre}</b> (${cod}) actualizado.`,
+    icon: "success",
+    confirmButtonText: "Cerrar",
+    confirmButtonColor: "#FDB7EA"
+  });
 };
 
 /* -----------------------------------------------------------
