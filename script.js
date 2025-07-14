@@ -18,7 +18,7 @@ const cursos = [
   {nivel:3, cod:"CC2101", nombre:"Ecuaciones Diferenciales",          credito:3, nota:13, estado:"Aprobado", pre:"Cálculo Vectorial"},
   {nivel:3, cod:"CS2013", nombre:"Programación III",                  credito:4, nota:17, estado:"Aprobado", pre:"Programación II"},
   {nivel:3, cod:"CS2031", nombre:"Desarrollo Basado en Plataformas",  credito:4, nota:null, estado:"Pendiente", pre:"Programación II"},
-  {nivel:3, cod:"CS2041", nombre:"Base de Datos I",                   credito:4, nota:14,  estado:"Pendiente", pre:"Programación II"},
+  {nivel:3, cod:"CS2041", nombre:"Base de Datos I",                   credito:4, nota:14,  estado:"Aprobado", pre:"Programación II"},
   {nivel:3, cod:"PI2102", nombre:"Proyectos Interdisciplinarios 2",   credito:3, nota:15, estado:"Aprobado", pre:"Proyectos Interdisciplinarios 1"},
 
   {nivel:4, cod:"CC2104", nombre:"Métodos Numéricos",                    credito:3, nota:null, estado:"Pendiente", pre:"Programación I / Álgebra Lineal / Ecuaciones Diferenciales"},
