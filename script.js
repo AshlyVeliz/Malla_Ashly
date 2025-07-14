@@ -1,7 +1,4 @@
-/* 1️⃣  Datos de la malla. */
-/* -----------------------------------------------------------------
- *  Datos de cursos – versión completa (55 cursos, Niveles 1-10)
- * ----------------------------------------------------------------*/
+/* 1. Datos de la malla. */
 const cursos = [
   {nivel:1, cod:"CC1101", nombre:"Cálculo de una variable", credito:4, nota:13, estado:"Aprobado", pre:""},
   {nivel:1, cod:"CS1000", nombre:"Introducción a la Ciencia de la Computación", credito:2, nota:null, estado:"Pendiente", pre:""},
@@ -72,7 +69,7 @@ const cursos = [
 
 const contenedor = document.getElementById("contenedor-niveles");
 
-/* 2️⃣ Render inicial */
+/* 2. Render inicial */
 function render(nivelFiltrado, estadoFiltrado="todos"){   // ← default por si acaso
   contenedor.innerHTML = "";
   const niveles = [...new Set(cursos.map(c=>c.nivel))].sort((a,b)=>a-b);
@@ -103,7 +100,7 @@ function render(nivelFiltrado, estadoFiltrado="todos"){   // ← default por si 
 }
 
 
-/* 3️⃣ Interacciones */
+/* 3. Interacciones */
 render();
 
 // Toggle de nivel
