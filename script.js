@@ -241,9 +241,12 @@ function muestraModal(codigo){
 
   // 2️⃣  Botón para marcar como aprobado
   document.getElementById("detalles").insertAdjacentHTML(
-    "beforeend",
-    `<li><button id="marcar-ok">✔️ Marcar como Aprobado</button></li>`
-  );
+  "beforeend",
+  `<li style="list-style:none;">
+     <button id="marcar-ok" class="btn-aprobar">✔️ Marcar como Aprobado</button>
+   </li>`
+);
+
 
   document.getElementById("marcar-ok").onclick = () => {
     updateCurso(codigo, c.nota ?? null, "Aprobado");  // cambia estado
