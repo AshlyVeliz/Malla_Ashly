@@ -30,9 +30,11 @@ main{width:90%;max-width:1000px;margin:2rem auto;}
 .curso:hover{transform:scale(1.03);}
 .curso.Aprobado{background:var(--aprobado);}
 .curso.Pendiente{background:var(--pendiente);}
+.nota-baja { filter: grayscale(1); }
 
 /* Modal */
 #modal{position:fixed;top:0;left:0;right:0;bottom:0;background:#0008;display:flex;align-items:center;justify-content:center;}
 #modal.oculto{display:none;}
 .card{background:#fff;padding:1.5rem;border-radius:.6rem;max-width:400px;width:90%;position:relative;}
 #cerrar{position:absolute;top:.4rem;right:.6rem;background:none;border:none;font-size:1.5rem;cursor:pointer;}
+.oculto{display:none;} 
