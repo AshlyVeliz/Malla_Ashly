@@ -1,0 +1,38 @@
+:root {
+  --aprobado:#7fd37f;
+  --pendiente:#ff7474;
+  --gris:#f2f2f2;
+}
+
+/* Reset rapidito */
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui, sans-serif;}
+
+body{background:#fafafa;color:#222;line-height:1.4}
+
+header{
+  background:#222;color:#fff;padding:1rem;text-align:center;
+}
+#filtros button{
+  margin:.2rem;padding:.4rem .8rem;border:none;border-radius:.5rem;
+  cursor:pointer;background:#555;color:#fff;
+}
+#filtros .activo{background:#f39c12;}
+main{width:90%;max-width:1000px;margin:2rem auto;}
+
+/* Cards de cursos */
+.nivel{margin-bottom:1.5rem;}
+.nivel>h3{cursor:pointer;background:#eee;padding:.6rem;border-radius:.4rem;}
+.cursos{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem;margin-top:.5rem;}
+.curso{
+  padding:.6rem;border-radius:.4rem;background:var(--gris);cursor:pointer;
+  transition:transform .15s;
+}
+.curso:hover{transform:scale(1.03);}
+.curso.Aprobado{background:var(--aprobado);}
+.curso.Pendiente{background:var(--pendiente);}
+
+/* Modal */
+#modal{position:fixed;top:0;left:0;right:0;bottom:0;background:#0008;display:flex;align-items:center;justify-content:center;}
+#modal.oculto{display:none;}
+.card{background:#fff;padding:1.5rem;border-radius:.6rem;max-width:400px;width:90%;position:relative;}
+#cerrar{position:absolute;top:.4rem;right:.6rem;background:none;border:none;font-size:1.5rem;cursor:pointer;}
