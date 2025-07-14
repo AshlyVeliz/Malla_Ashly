@@ -66,10 +66,48 @@ const cursos = [
   {nivel:10, cod:"GI5101",   nombre:"Estrategia y Organizaciones", credito:3, nota:null, estado:"Pendiente", pre:"Evaluación Financiera de Proyectos"},
 ];
 
+/* -----------------------------------------------------------
+ * Helper: ¿están aprobados TODOS los prereqs de un curso?
+ * ---------------------------------------------------------*/
+function prereqsAprobados(c){                // recibe el objeto curso
+  if(!c.pre.trim()) return true;             // sin prereqs
+  return c.pre.split('/').every(pr=>{
+    pr = pr.trim();
+    const base = cursos.find(x=>x.cod===pr);
+    return base && base.estado==="Aprobado";
+  });
+}
+/* -----------------------------------------------------------
+ * updateCurso(cod, nuevaNota, nuevoEstado)
+ * Ej.:   updateCurso("CC1101", 15, "Aprobado");
+ * ---------------------------------------------------------*/
+window.updateCurso = function(cod, nota=null, estado=null){
+  const c = cursos.find(x=>x.cod===cod);
+  if(!c){alert("Código no encontrado"); return;}
+
+  if(nota!==null)   c.nota   = nota;
+  if(estado)        c.estado = estado;
+
+  render();                       // redibuja todo
+  alert(`${cod} actualizado ✅`);
+};
+
+/* -----------------------------------------------------------
+ * Recalcula estado "Disponible" para cada curso Pendiente
+ * ---------------------------------------------------------*/
+function recalculaDisponibles(){
+  cursos.forEach(c=>{
+    if(c.estado==="Pendiente" && prereqsAprobados(c)){
+      c.estadoRender = "Disponible";
+    }else{
+      c.estadoRender = c.estado;             // Aprobado o Pendiente
+    }
+  });
+}
 
 
 /* -----------------------------------------------------------------
- * 2️⃣  MAPA de dependencias (curso ⇒ quiénes lo requieren)
+ *  MAPA de dependencias (curso ⇒ quiénes lo requieren)
  * ----------------------------------------------------------------*/
 const dependientes = {};
 cursos.forEach(c=>{
@@ -81,11 +119,12 @@ cursos.forEach(c=>{
 });
 
 /* -----------------------------------------------------------------
- * 3️⃣  RENDER
+ *  RENDER
  * ----------------------------------------------------------------*/
 const contenedor = document.getElementById("contenedor-niveles");
 
 function render(nivelFiltrado=null, estadoFiltrado="todos"){
+  recalculaDisponibles(); 
   contenedor.innerHTML = "";
   const niveles = [...new Set(cursos.map(c=>c.nivel))].sort((a,b)=>a-b);
 
@@ -103,7 +142,7 @@ function render(nivelFiltrado=null, estadoFiltrado="todos"){
       .sort((a,b)=>a.cod.localeCompare(b.cod))
       .forEach(c=>{
         const card = document.createElement("article");
-        card.className = `curso ${c.estado}`;
+        card.className = `curso ${c.estadoRender}`;
         if(c.nota!==null && c.nota<11) card.classList.add("nota-baja");
         card.dataset.codigo = c.cod;
 
@@ -158,17 +197,35 @@ document.getElementById("cerrar").onclick = () => modal.classList.add("oculto");
 const modal = document.getElementById("modal");
 
 function muestraModal(codigo){
-  const c = cursos.find(x=>x.cod===codigo);
+  const c = cursos.find(x => x.cod === codigo);
   if(!c) return;
-  document.getElementById("titulo-curso").textContent = `${c.cod} – ${c.nombre}`;
+
+  // 1️⃣  Rellena título y datos básicos
+  document.getElementById("titulo-curso").textContent =
+    `${c.cod} – ${c.nombre}`;
+
   document.getElementById("detalles").innerHTML = `
     <li><strong>Créditos:</strong> ${c.credito}</li>
     <li><strong>Nota:</strong> ${c.nota ?? "—"}</li>
     <li><strong>Estado:</strong> ${c.estado}</li>
     <li><strong>Pre-requisito:</strong> ${c.pre || "—"}</li>
   `;
+
+  // 2️⃣  Botón para marcar como aprobado
+  document.getElementById("detalles").insertAdjacentHTML(
+    "beforeend",
+    `<li><button id="marcar-ok">✔️ Marcar como Aprobado</button></li>`
+  );
+
+  document.getElementById("marcar-ok").onclick = () => {
+    updateCurso(codigo, c.nota ?? null, "Aprobado");  // cambia estado
+    modal.classList.add("oculto");                  // cierra modal
+  };
+
+  // 3️⃣  Muestra el modal
   modal.classList.remove("oculto");
 }
+
 
 function limpiarHighlight(){
   contenedor.querySelectorAll(".highlight")
