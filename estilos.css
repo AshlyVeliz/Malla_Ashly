@@ -1,14 +1,17 @@
-:root {
-  --aprobado:#7fd37f;
-  --pendiente:#ff7474;
-  --gris:#f2f2f2;
+/* Paletas */
+:root{
+  --aprobado:  #B7B1F2; /* lavanda */
+  --pendiente: #FDB7EA; /* rosa */
+  --highlight:#F7CFD8; /* rosa clarito */
+  --bg:        #F4F8D3; /* amarillo muy suave */
+  --gris:      #ffffff; /* neutro para tarjetas */
 }
 
-/* Reset rapidito */
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui, sans-serif;}
+/* ======= RESET BÁSICO ======= */
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif;}
+body   {background:var(--bg);color:#222;line-height:1.4}
 
-body{background:#fafafa;color:#222;line-height:1.4}
-
+/* ======= HEADER & FILTROS ======= */
 header{
   background:#222;color:#fff;padding:1rem;text-align:center;
 }
@@ -17,24 +20,59 @@ header{
   cursor:pointer;background:#555;color:#fff;
 }
 #filtros .activo{background:#f39c12;}
+
+/* ======= LAYOUT PRINCIPAL ======= */
 main{width:90%;max-width:1000px;margin:2rem auto;}
 
-/* Cards de cursos */
+/* ======= SECCIÓN NIVEL & TARJETAS ======= */
 .nivel{margin-bottom:1.5rem;}
-.nivel>h3{cursor:pointer;background:#eee;padding:.6rem;border-radius:.4rem;}
-.cursos{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem;margin-top:.5rem;}
+.nivel>h3{
+  cursor:pointer;background:#eee;padding:.6rem;border-radius:.4rem;
+}
+.cursos{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:.5rem;
+  margin-top:.5rem;
+}
 .curso{
+  position:relative;
   padding:.6rem;border-radius:.4rem;background:var(--gris);cursor:pointer;
   transition:transform .15s;
 }
 .curso:hover{transform:scale(1.03);}
-.curso.Aprobado{background:var(--aprobado);}
+.curso.Aprobado {background:var(--aprobado);}
 .curso.Pendiente{background:var(--pendiente);}
-.nota-baja { filter: grayscale(1); }
 
-/* Modal */
-#modal{position:fixed;top:0;left:0;right:0;bottom:0;background:#0008;display:flex;align-items:center;justify-content:center;}
+/* resalta relación */
+.curso.highlight{
+  outline:3px solid var(--highlight);
+  transform:scale(1.05);
+}
+/* nota desaprobada */
+.nota-baja{filter:grayscale(1);}
+
+/* icono info ℹ️ */
+.curso .info{
+  position:absolute;top:4px;right:6px;
+  font-size:.85rem;cursor:pointer;opacity:.6;
+}
+.curso .info:hover{opacity:1;}
+
+/* ======= MODAL ======= */
+#modal{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:#0008;display:flex;align-items:center;justify-content:center;
+}
 #modal.oculto{display:none;}
-.card{background:#fff;padding:1.5rem;border-radius:.6rem;max-width:400px;width:90%;position:relative;}
-#cerrar{position:absolute;top:.4rem;right:.6rem;background:none;border:none;font-size:1.5rem;cursor:pointer;}
-.oculto{display:none;} 
+.card{
+  background:#fff;padding:1.5rem;border-radius:.6rem;
+  max-width:400px;width:90%;position:relative;
+}
+#cerrar{
+  position:absolute;top:.4rem;right:.6rem;background:none;border:none;
+  font-size:1.5rem;cursor:pointer;
+}
+
+/* util */
+.oculto{display:none;}
