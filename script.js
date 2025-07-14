@@ -83,14 +83,14 @@ function resolveCurso(ref){
 /* -----------------------------------------------------------
  * Helper: ¿están aprobados TODOS los prereqs de un curso?
  * ---------------------------------------------------------*/
-function prereqsAprobados(c){                // recibe el objeto curso
-  if(!c.pre.trim()) return true;             // sin prereqs
+function prereqsAprobados(c){
+  if(!c.pre.trim()) return true;  // sin prereqs
   return c.pre.split('/').every(pr=>{
-    pr = pr.trim();
-    const base = cursos.find(x=>x.cod===pr);
-    return base && base.estado==="Aprobado";
+    const padre = resolveCurso(pr.trim());
+    return padre && padre.estado === "Aprobado";
   });
 }
+
 /* -----------------------------------------------------------
  * updateCurso(cod, nuevaNota, nuevoEstado)
  * Ej.:   updateCurso("CC1101", 15, "Aprobado");
@@ -127,8 +127,10 @@ const dependientes = {};
 cursos.forEach(c=>{
   const prereqs = c.pre.split('/').map(p=>p.trim()).filter(Boolean);
   prereqs.forEach(pr=>{
-    dependientes[pr] = dependientes[pr] || [];
-    dependientes[pr].push(c.cod);
+    const padre = resolveCurso(pr);
+    if(!padre) return;
+    dependientes[padre.cod] = dependientes[padre.cod] || [];
+    dependientes[padre.cod].push(c.cod);
   });
 });
 
