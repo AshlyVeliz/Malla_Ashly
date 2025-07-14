@@ -65,6 +65,20 @@ const cursos = [
   {nivel:10, cod:"ELECTIVO6", nombre:"ELECTIVO 6",              credito:0, nota:null, estado:"Pendiente", pre:""},
   {nivel:10, cod:"GI5101",   nombre:"Estrategia y Organizaciones", credito:3, nota:null, estado:"Pendiente", pre:"Evaluación Financiera de Proyectos"},
 ];
+/* -----------------------------------------------------------------
+ *  MAPAS DE BÚSQUEDA RÁPIDA
+ * ----------------------------------------------------------------*/
+const mapCod   = {};   // cod  -> objeto curso
+const mapNom   = {};   // nombre (lower) -> objeto curso
+cursos.forEach(c=>{
+  mapCod[c.cod]             = c;
+  mapNom[c.nombre.toLowerCase()] = c;
+});
+
+/* helper para resolver string a objeto curso  */
+function resolveCurso(ref){
+  return mapCod[ref] || mapNom[ref.toLowerCase()] || null;
+}
 
 /* -----------------------------------------------------------
  * Helper: ¿están aprobados TODOS los prereqs de un curso?
@@ -117,6 +131,7 @@ cursos.forEach(c=>{
     dependientes[pr].push(c.cod);
   });
 });
+
 
 /* -----------------------------------------------------------------
  *  RENDER
