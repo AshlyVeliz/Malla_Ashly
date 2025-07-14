@@ -5,13 +5,14 @@
   --highlight:#F7CFD8; /* rosa clarito */
   --bg:        #F4F8D3; /* amarillo muy suave */
   --gris:      #ffffff; /* neutro para tarjetas */
+  --disponible:#CDE9FF; /* azul pastel para cursos que YA se pueden llevar */
 }
 
-/* ======= RESET BÁSICO ======= */
+/* RESET BÁSICO */
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif;}
 body   {background:var(--bg);color:#222;line-height:1.4}
 
-/* ======= HEADER & FILTROS ======= */
+/* HEADER & FILTROS */
 header{
   background:#222;color:#fff;padding:1rem;text-align:center;
 }
@@ -21,7 +22,8 @@ header{
 }
 #filtros .activo{background:#f39c12;}
 
-/* ======= LAYOUT PRINCIPAL ======= */
+
+/* LAYOUT PRINCIPAL */
 main{width:90%;max-width:1000px;margin:2rem auto;}
 
 /* ======= SECCIÓN NIVEL & TARJETAS ======= */
@@ -52,12 +54,15 @@ main{width:90%;max-width:1000px;margin:2rem auto;}
 /* nota desaprobada */
 .nota-baja{filter:grayscale(1);}
 
-/* icono info ℹ️ */
+/* icono info ! */
 .curso .info{
   position:absolute;top:4px;right:6px;
   font-size:.85rem;cursor:pointer;opacity:.6;
 }
 .curso .info:hover{opacity:1;}
+
+/* tarjeta cuando todos sus prereqs están aprobados */
+.curso.Disponible{background:var(--disponible);}
 
 /* ======= MODAL ======= */
 #modal{
