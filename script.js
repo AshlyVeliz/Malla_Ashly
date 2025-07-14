@@ -3,7 +3,7 @@ const cursos = [
   {nivel:1, cod:"CC1101", nombre:"Cálculo de una variable", credito:4, nota:13, estado:"Aprobado", pre:""},
   {nivel:1, cod:"CS1000", nombre:"Introducción a la Ciencia de la Computación", credito:2, nota:null, estado:"Pendiente", pre:""},
   {nivel:1, cod:"CS1021", nombre:"Matemáticas Discretas I", credito:4, nota:16, estado:"Aprobado", pre:""},
-  {nivel:1, cod:"CS1111", nombre:"Programación I", credito:4, nota:17, estado:"Aprobado", pre:""},
+  {nivel:1, cod:"CS1111", nombre:"Programación I", credito:4, nota:null, estado:"Aprobado", pre:""},
   {nivel:1, cod:"HH1101", nombre:"Laboratorio de Comunicación 1", credito:3, nota:18, estado:"Aprobado", pre:""},
   {nivel:1, cod:"PI1101", nombre:"Proyectos Interdisciplinarios 1", credito:3, nota:15, estado:"Aprobado", pre:""},
 
@@ -14,11 +14,11 @@ const cursos = [
   {nivel:2, cod:"CS1112", nombre:"Programación II", credito:4, nota:14, estado:"Aprobado", pre:"Programación I"},
   {nivel:2, cod:"HH1102", nombre:"Laboratorio de Comunicación 2", credito:3, nota:15, estado:"Aprobado", pre:"Laboratorio de Comunicación 1"},
 
-  {nivel:3, cod:"CC1105", nombre:"Estadística y Probabilidades I", credito:4, nota:9,  estado:"Pendiente", pre:"Cálculo de una variable"},
+  {nivel:3, cod:"CC1105", nombre:"Estadística y Probabilidades I", credito:4, nota:10.4,  estado:"Pendiente", pre:"Cálculo de una variable"},
   {nivel:3, cod:"CC2101", nombre:"Ecuaciones Diferenciales",          credito:3, nota:13, estado:"Aprobado", pre:"Cálculo Vectorial"},
   {nivel:3, cod:"CS2013", nombre:"Programación III",                  credito:4, nota:17, estado:"Aprobado", pre:"Programación II"},
   {nivel:3, cod:"CS2031", nombre:"Desarrollo Basado en Plataformas",  credito:4, nota:null, estado:"Pendiente", pre:"Programación II"},
-  {nivel:3, cod:"CS2041", nombre:"Base de Datos I",                   credito:4, nota:9,  estado:"Pendiente", pre:"Programación II"},
+  {nivel:3, cod:"CS2041", nombre:"Base de Datos I",                   credito:4, nota:14,  estado:"Pendiente", pre:"Programación II"},
   {nivel:3, cod:"PI2102", nombre:"Proyectos Interdisciplinarios 2",   credito:3, nota:15, estado:"Aprobado", pre:"Proyectos Interdisciplinarios 1"},
 
   {nivel:4, cod:"CC2104", nombre:"Métodos Numéricos",                    credito:3, nota:null, estado:"Pendiente", pre:"Programación I / Álgebra Lineal / Ecuaciones Diferenciales"},
