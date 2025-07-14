@@ -67,31 +67,51 @@ const cursos = [
 ];
 
 
+
+/* -----------------------------------------------------------------
+ * 2️⃣  MAPA de dependencias (curso ⇒ quiénes lo requieren)
+ * ----------------------------------------------------------------*/
+const dependientes = {};
+cursos.forEach(c=>{
+  const prereqs = c.pre.split('/').map(p=>p.trim()).filter(Boolean);
+  prereqs.forEach(pr=>{
+    dependientes[pr] = dependientes[pr] || [];
+    dependientes[pr].push(c.cod);
+  });
+});
+
+/* -----------------------------------------------------------------
+ * 3️⃣  RENDER
+ * ----------------------------------------------------------------*/
 const contenedor = document.getElementById("contenedor-niveles");
 
-/* 2. Render inicial */
-function render(nivelFiltrado, estadoFiltrado="todos"){   // ← default por si acaso
+function render(nivelFiltrado=null, estadoFiltrado="todos"){
   contenedor.innerHTML = "";
   const niveles = [...new Set(cursos.map(c=>c.nivel))].sort((a,b)=>a-b);
 
   niveles.forEach(niv=>{
     if(nivelFiltrado && niv!==nivelFiltrado) return;
+
     const divN = document.createElement("section");
-    divN.className="nivel";
-    divN.innerHTML=`<h3>Nivel ${niv}</h3><div class="cursos"></div>`;
+    divN.className = "nivel";
+    divN.innerHTML = `<h3>Nivel ${niv}</h3><div class="cursos"></div>`;
     const grid = divN.querySelector(".cursos");
 
     cursos
-      .filter(c=>c.nivel===niv &&
+      .filter(c => c.nivel===niv &&
         (estadoFiltrado==="todos" || estadoFiltrado===c.estado))
-      .sort((a, b) => a.cod.localeCompare(b.cod))
-
+      .sort((a,b)=>a.cod.localeCompare(b.cod))
       .forEach(c=>{
         const card = document.createElement("article");
-        card.className=`curso ${c.estado}`;
+        card.className = `curso ${c.estado}`;
+        if(c.nota!==null && c.nota<11) card.classList.add("nota-baja");
+        card.dataset.codigo = c.cod;
 
-        card.dataset.codigo=c.cod;
-        card.innerHTML=`<strong>${c.cod}</strong><br>${c.nombre}`;
+        card.innerHTML = `
+          <strong>${c.cod}</strong><br>
+          ${c.nombre}
+          <span class="info">ℹ️</span>
+        `;
         grid.appendChild(card);
       });
 
@@ -99,31 +119,43 @@ function render(nivelFiltrado, estadoFiltrado="todos"){   // ← default por si 
   });
 }
 
+render();   // render inicial
 
-/* 3. Interacciones */
-render();
-
-// Toggle de nivel
-contenedor.addEventListener("click",e=>{
-  if(e.target.tagName==="H3"){
-    e.target.nextElementSibling.classList.toggle("oculto");
-  }
-  if(e.target.closest(".curso")){
-    muestraModal(e.target.closest(".curso").dataset.codigo);
-  }
-});
-
-// Filtros
+/* -----------------------------------------------------------------
+ * 4️⃣  EVENTOS
+ * ----------------------------------------------------------------*/
+// filtro (header)
 document.getElementById("filtros").addEventListener("click",e=>{
   if(e.target.tagName!=="BUTTON") return;
   [...e.currentTarget.children].forEach(b=>b.classList.remove("activo"));
   e.target.classList.add("activo");
   render(null, e.target.dataset.status);
+  limpiarHighlight();
 });
 
-// Modal
-const modal=document.getElementById("modal");
-document.getElementById("cerrar").onclick=()=>modal.classList.add("oculto");
+// clics dentro de los niveles
+contenedor.addEventListener("click",e=>{
+  const card = e.target.closest(".curso");
+  if(!card) return;
+
+  // SI clic al icono ℹ️ ▶️ modal
+  if(e.target.classList.contains("info")){
+    muestraModal(card.dataset.codigo);
+    e.stopPropagation();
+    return;
+  }
+
+  // SI clic a la tarjeta ▶️ highlight relación
+  highlightRelacion(card.dataset.codigo);
+});
+
+// cerrar modal
+document.getElementById("cerrar").onclick = () => modal.classList.add("oculto");
+
+/* -----------------------------------------------------------------
+ * 5️⃣  FUNCIONES AUX
+ * ----------------------------------------------------------------*/
+const modal = document.getElementById("modal");
 
 function muestraModal(codigo){
   const c = cursos.find(x=>x.cod===codigo);
@@ -133,6 +165,26 @@ function muestraModal(codigo){
     <li><strong>Créditos:</strong> ${c.credito}</li>
     <li><strong>Nota:</strong> ${c.nota ?? "—"}</li>
     <li><strong>Estado:</strong> ${c.estado}</li>
-    <li><strong>Pre-requisito:</strong> ${c.pre || "—"}</li>`;
+    <li><strong>Pre-requisito:</strong> ${c.pre || "—"}</li>
+  `;
   modal.classList.remove("oculto");
+}
+
+function limpiarHighlight(){
+  contenedor.querySelectorAll(".highlight")
+            .forEach(el=>el.classList.remove("highlight"));
+}
+
+function highlightRelacion(codigo){
+  limpiarHighlight();
+
+  // resalta seleccionado
+  const clicked = contenedor.querySelector(`[data-codigo="${codigo}"]`);
+  if(clicked) clicked.classList.add("highlight");
+
+  // resalta dependientes
+  (dependientes[codigo] || []).forEach(dep=>{
+    const depCard = contenedor.querySelector(`[data-codigo="${dep}"]`);
+    if(depCard) depCard.classList.add("highlight");
+  });
 }
